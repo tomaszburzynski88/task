@@ -1,0 +1,131 @@
+openapi: 3.0.3
+info:
+  title: Example shop application2
+  description: Example shop application
+  version: 1.0.0
+servers:
+  - url: 'http'
+
+tags:
+  - name: Shop
+
+paths:
+  /item:
+    get:
+      operationId: getAllItems
+      description: 'you can filter by fields using keywords: eq(equals), ne(not equals), gt(greater than), le(less equals than), lt(less than), ge(greater equals), AND, OR'
+      tags:
+        - Shop
+      parameters:
+        - name: filter
+          required: false
+          in: query
+          schema:
+            type: string
+          example: name eq superproduct and price gt 1
+      responses:
+        '200':
+          description: Returns all items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemDTO'
+
+    post:
+      operationId: addItem
+      tags:
+        - Shop
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ItemDTO'
+
+      responses:
+        '201':
+          description: Creates items
+
+  /item/{id}:
+    put:
+      parameters:
+        - name: id
+          in: path
+          description: item id
+          required: true
+          schema:
+            type: integer
+      operationId: updateItem
+      tags:
+        - Shop
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemDTO'
+      responses:
+        '200':
+          description: Returns updated object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemDTO'
+        "404":
+          description: Not Found
+
+    delete:
+      parameters:
+        - name: id
+          in: path
+          description: item id
+          required: true
+          schema:
+            type: integer
+      operationId: deleteItemById
+      tags:
+        - Shop
+      responses:
+        '204':
+          description: Returns status no content
+        "404":
+          description: Not Found
+
+    get:
+      parameters:
+        - name: id
+          in: path
+          description: item id
+          required: true
+          schema:
+            type: integer
+      operationId: getItemById
+      tags:
+        - Shop
+      responses:
+        '200':
+          description: Returns item with desired id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemDTO'
+        "404":
+          description: Not Found
+
+
+components:
+  schemas:
+    ItemDTO:
+      properties:
+        id:
+          type: integer
+          nullable: false
+          uniqueItems: true
+        name:
+          type: string
+          nullable: false
+        price:
+          type: number
+          nullable: false

@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1728405119888-1
+      author: a502282 (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: ITEMPK
+                  name: id
+                  type: INTEGER
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: price
+                  type: numeric(38, 2)
+            tableName: ITEM
+
