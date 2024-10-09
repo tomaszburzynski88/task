@@ -3,3 +3,4 @@
 - at initdb you have some simple sql to initialize database
 - liquibase should start automatically
 - minimum Java 17+
+- http://localhost:8080/swagger-ui/index.html
